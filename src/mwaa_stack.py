@@ -158,7 +158,7 @@ class MwaaStack(cdk.Stack):
             airflow_configuration_options={
                 "secrets.backend": "airflow.providers.amazon.aws.secrets.secrets_manager.SecretsManagerBackend",
                 "secrets.backend_kwargs": '{"connections_prefix": "airflow/connections", "variables_prefix": "airflow/variables"}',
-                "core.allowed_deserialization_classes": "airflow.* astro.* __main__.*",
+                "core.allowed_deserialization_classes": ".*",
             },
             network_configuration=mwaa.CfnEnvironment.NetworkConfigurationProperty(
                 security_group_ids=[security_group.security_group_id],
