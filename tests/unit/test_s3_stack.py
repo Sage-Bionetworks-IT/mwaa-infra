@@ -38,7 +38,10 @@ def test_dag_bucket_enforces_ssl():
                 "Statement": assertions.Match.array_with(
                     [
                         assertions.Match.object_like(
-                            {"Effect": "Deny", "Condition": {"Bool": {"aws:SecureTransport": "false"}}}
+                            {
+                                "Effect": "Deny",
+                                "Condition": {"Bool": {"aws:SecureTransport": "false"}},
+                            }
                         )
                     ]
                 )
