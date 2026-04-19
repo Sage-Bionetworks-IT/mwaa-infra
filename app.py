@@ -39,6 +39,7 @@ mwaa_stack = MwaaStack(
     max_workers=mwaa_config["MAX_WORKERS"],
     min_workers=mwaa_config["MIN_WORKERS"],
     webserver_access_mode=mwaa_config["WEBSERVER_ACCESS_MODE"],
+    requirements_s3_path=mwaa_config.get("REQUIREMENTS_S3_PATH"),
 )
 mwaa_stack.add_dependency(network_stack)
 mwaa_stack.add_dependency(s3_stack)

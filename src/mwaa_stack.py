@@ -16,6 +16,7 @@ class MwaaStack(cdk.Stack):
         max_workers: int,
         min_workers: int,
         webserver_access_mode: str,
+        requirements_s3_path: str = None,
         **kwargs,
     ) -> None:
         super().__init__(scope, construct_id, **kwargs)
@@ -152,11 +153,12 @@ class MwaaStack(cdk.Stack):
             execution_role_arn=execution_role.role_arn,
             source_bucket_arn=dag_bucket.bucket_arn,
             dag_s3_path="dags/",
+            requirements_s3_path=requirements_s3_path,
             webserver_access_mode=webserver_access_mode,
-            # Wire Secrets Manager as the backend for Airflow connections/variables
             airflow_configuration_options={
                 "secrets.backend": "airflow.providers.amazon.aws.secrets.secrets_manager.SecretsManagerBackend",
                 "secrets.backend_kwargs": '{"connections_prefix": "airflow/connections", "variables_prefix": "airflow/variables"}',
+                "core.allowed_deserialization_classes": "airflow.* astro.* __main__.*",
             },
             network_configuration=mwaa.CfnEnvironment.NetworkConfigurationProperty(
                 security_group_ids=[security_group.security_group_id],
